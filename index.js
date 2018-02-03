@@ -1,16 +1,15 @@
 const joi = require('joi');
 const { keys } = Object;
-const parser = module.exports = (_json) => {
-    const json = !_json.__$type ? { __$properties:_json } : _json;
+const parser = module.exports = (json) => {
     const{
         __$type,
         __$properties,
         __$required = [],
         __$items = [],
-        __$options = {}
+        __$options = {},
     } = json;
     const required = new Set(__$required);
-    let schema = typeof joi[__$type] === 'function' ? joi[__$type]() : _json;
+    let schema = typeof joi[__$type] === 'function' ? joi[__$type]() : json;
 
     if (schema.keys && __$properties) schema = schema
         .keys(
@@ -19,7 +18,7 @@ const parser = module.exports = (_json) => {
                     if (!__$properties[prop]) return store;
 
                     store[prop] = parser(__$properties[prop]);
-                    console.log('required.has(prop) ', required.has(prop), prop, required);
+                    if (required.has(prop)) store[prop] = store[prop].required();
                     if (required.has(prop)) store[prop] = store[prop].required();
                     return store;
                 }, {})
