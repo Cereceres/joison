@@ -1,0 +1,32 @@
+{
+  "name": "joison",
+  "version": "0.0.1",
+  "description": "parser to get joi schema from json",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "joi": "^13.1.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "mocha test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Cereceres/joison.git"
+  },
+  "keywords": [
+    "joi",
+    "schema",
+    "json",
+    "parser"
+  ],
+  "author": "Jesus Cereceres",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Cereceres/joison/issues"
+  },
+  "homepage": "https://github.com/Cereceres/joison#readme"
+}
