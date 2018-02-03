@@ -4,7 +4,7 @@ parse to get joi schema from json schema
 # install 
 
 npm install --save joison
-# Usage 
+# Usage Examples
 
 ```js
 const assert = require('assert');
@@ -210,21 +210,48 @@ const { error } = joi.validate({
     other:[ 1, 2, 3, 4 ]
 }, schema);
 assert(error);
+
+const schema = joison({
+    __$type:'string',
+    __$options:{
+        email:[]
+    }
+});
+
+const { error } = joi.validate('test@test.com', schema);
+assert(!error);
+
+const schema = joison({
+    __$type:'object',
+    __$options:{
+        pattern:[
+            /.+/,
+            {
+                __$type:'number'
+            }
+        ]
+    }
+});
+
+const { error } = joi.validate({ strangeThing: 2 }, schema);
+assert(!error);
 ```
 
 #API joison(json)-> joiSchema
 
 the reserved word in json are:
 
-__$type
+__$type: type allow by joi
 
-__$items
+__$items: list of items passed to items array schema method.
 
-__$properties
+__$properties: hash of properties passed to keys object schema method.
 
-__$required
+__$required = []: list of keys requireds in __$properties hash.
 
-__$options
+__$options = {}: hash with methods availables in  __$type given as keys and arguments as values.
+
+__$args = []: list of arguments to be passed when __$type is called.
 
 The __$options object'keys must to be method name for __$type given. The value of given keys is passed as parameter of method.
 

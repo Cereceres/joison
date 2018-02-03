@@ -148,7 +148,27 @@ describe('test to joison', () => {
         const { error } = joi.validate({
             test:[ 1, 2 ]
         }, schema);
-        console.log('error ', error);
+        assert(error);
+    });
+
+    it('should parse the json and return a schema valid', () => {
+        const schema = joison({
+            __$type:'object',
+            __$properties:{
+                test:{
+                    __$type: 'array',
+                    __$items:[ 1, 2 ]
+                },
+                other:{
+                    __$type: 'array',
+                    __$items:[ 1, 2 ]
+                }
+            },
+            __$required:[ 'other' ]
+        });
+        const { error } = joi.validate({
+            test:[ 1, 2 ]
+        }, schema);
         assert(error);
     });
 
@@ -225,5 +245,213 @@ describe('test to joison', () => {
             other:[ 1, 2, 3, 4 ]
         }, schema);
         assert(error);
+    });
+
+    it('should parse the json and return a schema valid', () => {
+        const schema = joison({
+            __$type:'object',
+            __$properties:{
+                number:{
+                    __$type: 'number',
+                    __$options:{
+                        min: 3,
+                        max: 6
+                    }
+                }
+            },
+            __$required:[ 'other' ]
+        });
+
+        const { error } = joi.validate({
+            number: 5
+        }, schema);
+        assert(!error);
+    });
+
+    it('should parse the json and return a schema valid', () => {
+        const schema = joison({
+            __$type:'object',
+            __$properties:{
+                number:{
+                    __$type: 'number',
+                    __$options:{
+                        min: 3,
+                        max: 6
+                    }
+                }
+            },
+            __$required:[ 'other' ]
+        });
+
+        const { error } = joi.validate({
+            number: 7
+        }, schema);
+        assert(error);
+    });
+
+    it('should parse the json and return a schema valid', () => {
+        const schema = joison({
+            __$type:'object',
+            __$properties:{
+                number:{
+                    __$type: 'number',
+                    __$options:{
+                        min: 3,
+                        max: 6
+                    }
+                }
+            },
+            __$required:[ 'other' ]
+        });
+
+        const { error } = joi.validate({
+            number: 2
+        }, schema);
+        assert(error);
+    });
+
+    it('should parse the json and return a schema valid', () => {
+        const schema = joison({
+            __$type:'string',
+            __$options:{
+                email:[]
+            }
+        });
+
+        const { error } = joi.validate('notemail', schema);
+        assert(error);
+    });
+
+    it('should parse the json and return a schema valid', () => {
+        const schema = joison({
+            __$type:'string',
+            __$options:{
+                email:[]
+            }
+        });
+
+        const { error } = joi.validate('test@test.com', schema);
+        assert(!error);
+    });
+
+    it('should parse the json and return a schema valid', () => {
+        const schema = joison({
+            __$type:'any'
+        });
+
+        const { error } = joi.validate('test@test.com', schema);
+        assert(!error);
+    });
+
+    it('should parse the json and return a schema valid', () => {
+        const schema = joison({
+            __$type:'any'
+        });
+
+        const { error } = joi.validate([], schema);
+        assert(!error);
+    });
+
+    it('should parse the json and return a schema valid', () => {
+        const schema = joison({
+            __$type:'any'
+        });
+
+        const { error } = joi.validate({}, schema);
+        assert(!error);
+    });
+
+    it('should parse the json and return a schema valid', () => {
+        const schema = joison({
+            __$type:'object',
+            __$options:{
+                pattern:[
+                    /.+/,
+                    joi.string()
+                ]
+            }
+        });
+
+        const { error } = joi.validate({ a:'string' }, schema);
+        assert(!error);
+    });
+
+    it('should parse the json and return a schema valid', () => {
+        const schema = joison({
+            __$type:'object',
+            __$options:{
+                pattern:[
+                    /.+/,
+                    joi.string()
+                ]
+            }
+        });
+
+        const { error } = joi.validate({ a: 1 }, schema);
+        assert(error);
+    });
+
+    it('should parse the json and return a schema valid', () => {
+        const schema = joison({
+            __$type:'object',
+            __$options:{
+                pattern:[
+                    /.+/,
+                    joi.string()
+                ]
+            }
+        });
+
+        const { error } = joi.validate({ a: [] }, schema);
+        assert(error);
+    });
+
+    it('should parse the json and return a schema valid', () => {
+        const schema = joison({
+            __$type:'object',
+            __$options:{
+                pattern:[
+                    /.+/,
+                    joi.string()
+                ]
+            }
+        });
+
+        const { error } = joi.validate({ a: {} }, schema);
+        assert(error);
+    });
+
+    it('should parse the json and return a schema valid', () => {
+        const schema = joison({
+            __$type:'object',
+            __$options:{
+                pattern:[
+                    /.+/,
+                    {
+                        __$type:'number'
+                    }
+                ]
+            }
+        });
+
+        const { error } = joi.validate({ a: {} }, schema);
+        assert(error);
+    });
+
+    it('should parse the json and return a schema valid', () => {
+        const schema = joison({
+            __$type:'object',
+            __$options:{
+                pattern:[
+                    /.+/,
+                    {
+                        __$type:'number'
+                    }
+                ]
+            }
+        });
+
+        const { error } = joi.validate({ strangeThing: 2 }, schema);
+        assert(!error);
     });
 });
