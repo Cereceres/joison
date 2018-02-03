@@ -217,8 +217,21 @@ assert(error);
 the reserved word in json are:
 
 __$type
+
 __$items
+
 __$properties
+
 __$required
+
 __$options
 
+The __$options object'keys must to be method name for __$type given. The value of given keys is passed as parameter of method.
+
+    Example:
+
+    __$options:{
+        length: 6
+    }
+
+to array type.
